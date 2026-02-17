@@ -1,13 +1,10 @@
 package com.suhyeon.intelli_folio.rag.qdrant;
 
-import com.suhyeon.intelli_folio.rag.RagInitializer;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,8 +61,7 @@ public class QdrantClient {
 
     public void upsert(String collection, String pointId, List<Float> vector, Map<String, Object> payload) {
         var req = new UpsertRequest(
-                List.of(new Point(pointId, vector, payload)),
-                true
+                List.of(new Point(pointId, vector, payload))
         );
 
         qdrantWebClient.put()
@@ -116,7 +112,6 @@ public class QdrantClient {
 
 
 
-
     private Map<String, Object> buildSearchFilter(SearchScope scope) {
         List<Map<String, Object>> must = new ArrayList<>();
 
@@ -152,7 +147,7 @@ public class QdrantClient {
 
 
 
-    public record UpsertRequest(List<Point> points, boolean wait_flag) {}
+    public record UpsertRequest(List<Point> points) {}
     public record Point(String id, List<Float> vector, Map<String, Object> payload) {}
 
     public record SearchScope(
@@ -163,5 +158,4 @@ public class QdrantClient {
     public record SearchHit(String id, double score, Map<String, Object> payload) {}
     public record SearchResponse(List<SearchResult> result) {}
     public record SearchResult(String id, double score, Map<String, Object> payload) {}
-}
 }
