@@ -1,6 +1,6 @@
-package com.suhyeon.intelli_folio.module.user;
+package com.suhyeon.intelli_folio.core.auth;
 
-import com.suhyeon.intelli_folio.core.auth.AuthDtos;
+import com.suhyeon.intelli_folio.module.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/auth")
+public class AuthController {
     private final UserService userService;
 
-    @PostMapping("/auth/signup")
+    @PostMapping("/signup")
     public ResponseEntity<AuthDtos.SignupResponse> signup(@Valid @RequestBody AuthDtos.SignupRequest req) {
         return ResponseEntity.ok(userService.signup(req));
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<AuthDtos.LoginResponse> login(@Valid @RequestBody AuthDtos.LoginRequest req) {
         return ResponseEntity.ok(userService.login(req));
     }

@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -12,15 +14,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Set;
 
-@Component
+
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final AuthService authService;
-
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthFilter.class);
 
     private static final Set<String> PUBLIC_PREFIX = Set.of(
-            "/api/user/auth"
+            "/api/auth"
 
     );
 
@@ -52,15 +54,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             var verified = authService.verify(token);
+            log.info("Auth header = {}", request.getHeader("Authorization"));
 
             request.setAttribute("userId", verified.userId());
             request.setAttribute("email", verified.email());
-
-            filterChain.doFilter(request, response);
         } catch (Exception e) {
+            log.warn("JWT rejected: method={} uri={} reason={}",
+                    request.getMethod(), request.getRequestURI(), e.toString());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.getWriter().write("{\"error\":\"Invalid or expired token\"}");
+            return;
         }
+        filterChain.doFilter(request, response);
     }
 }

@@ -8,15 +8,23 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class FilterConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
+    private final AuthService authService;
 
     @Bean
     public FilterRegistrationBean<JwtAuthFilter> jwtAuthFilterRegistration() {
         FilterRegistrationBean<JwtAuthFilter> reg = new FilterRegistrationBean<>();
-        reg.setFilter(jwtAuthFilter);
-
+        reg.setFilter(new JwtAuthFilter(authService));
         reg.addUrlPatterns("/api/*");
-        reg.setOrder(1);
+        reg.setOrder(2);
         return reg;
+    }
+
+    @Bean
+    public FilterRegistrationBean<ApiLoggingFilter> loggingFilter() {
+        FilterRegistrationBean<ApiLoggingFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new ApiLoggingFilter());
+        registration.setOrder(1); // 숫자 작을수록 먼저 실행
+        registration.addUrlPatterns("/*");
+        return registration;
     }
 }

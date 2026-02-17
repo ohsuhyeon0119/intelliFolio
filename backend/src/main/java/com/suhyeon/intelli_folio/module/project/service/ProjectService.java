@@ -1,5 +1,6 @@
 package com.suhyeon.intelli_folio.module.project.service;
 
+import com.suhyeon.intelli_folio.core.rag.qdrant.PointIdBuilder;
 import com.suhyeon.intelli_folio.module.project.domain.Document;
 import com.suhyeon.intelli_folio.module.project.domain.Project;
 import com.suhyeon.intelli_folio.module.project.dto.*;
@@ -88,7 +89,7 @@ public class ProjectService {
             for (int i = 0; i < chunks.size(); i++) {
                 String chunkText = chunks.get(i);
 
-                String pointId = docId + ":" + i; // stable & unique per doc
+                String pointId = PointIdBuilder.forChunk(userId,projectId,docId,i);
                 ragService.insertDataToVectorDB(
                         pointId,
                         userId,
