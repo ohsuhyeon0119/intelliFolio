@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suhyeon.intelli_folio.module.project.ProjectMapper">
+
+    <insert id="insert">
+        INSERT INTO projects (user_id, name, summary)
+        VALUES (#{userId}, #{name}, #{summary})
+    </insert>
+
+    <select id="lastInsertId" resultType="long">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <select id="findOwnerUserId" resultType="long">
+        SELECT user_id
+        FROM projects
+        WHERE id = #{projectId}
+            LIMIT 1
+    </select>
+
+</mapper>

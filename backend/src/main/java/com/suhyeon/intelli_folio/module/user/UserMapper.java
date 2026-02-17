@@ -1,5 +1,6 @@
 package com.suhyeon.intelli_folio.module.user;
 
+import com.suhyeon.intelli_folio.module.user.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

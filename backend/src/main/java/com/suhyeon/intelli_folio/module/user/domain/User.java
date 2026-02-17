@@ -1,4 +1,4 @@
-package com.suhyeon.intelli_folio.module.user;
+package com.suhyeon.intelli_folio.module.user.domain;
 
 import java.time.Instant;
 
