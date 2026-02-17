@@ -18,12 +18,14 @@
             LIMIT 1
     </select>
 
-    <insert id="insert">
+    <insert id="insert"
+            parameterType="com.suhyeon.intelli_folio.module.user.dto.CreateUserCommand"
+            useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="id">
         INSERT INTO users (email, password_hash, display_name)
         VALUES (#{email}, #{passwordHash}, #{displayName})
     </insert>
 
-    <select id="lastInsertId" resultType="long">
-        SELECT LAST_INSERT_ID()
-    </select>
+
 </mapper>

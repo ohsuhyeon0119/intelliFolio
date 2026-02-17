@@ -3,6 +3,7 @@ package com.suhyeon.intelli_folio.module.user;
 import com.suhyeon.intelli_folio.core.auth.AuthDtos;
 import com.suhyeon.intelli_folio.core.auth.AuthExceptions;
 import com.suhyeon.intelli_folio.core.auth.AuthService;
+import com.suhyeon.intelli_folio.module.user.dto.CreateUserCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
 
-    @Transactional
     public AuthDtos.SignupResponse signup(AuthDtos.SignupRequest req) {
         var exists = userMapper.findByEmail(req.email());
         if (exists != null) {
@@ -26,8 +26,14 @@ public class UserService {
 
         String hash = passwordEncoder.encode(req.password());
 
-        userMapper.insert(req.email(), hash,req.displayName());
-        long userId = userMapper.lastInsertId();
+        CreateUserCommand cmd = new CreateUserCommand();
+        cmd.setEmail(req.email());
+        cmd.setPasswordHash(hash);
+        cmd.setDisplayName(req.displayName());
+
+        userMapper.insert(cmd);
+        Long userId = cmd.getId();
+
 
         return new AuthDtos.SignupResponse(userId, req.email(), req.displayName());
 

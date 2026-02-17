@@ -5,7 +5,11 @@
 
 <mapper namespace="com.suhyeon.intelli_folio.module.project.ProjectMapper">
 
-    <insert id="insert">
+    <insert id="insert"
+            parameterType="com.suhyeon.intelli_folio.module.project.dto.CreateProjectCommand"
+            useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="id">
         INSERT INTO projects (user_id, name, summary)
         VALUES (#{userId}, #{name}, #{summary})
     </insert>

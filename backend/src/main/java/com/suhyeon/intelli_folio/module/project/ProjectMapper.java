@@ -1,15 +1,11 @@
 package com.suhyeon.intelli_folio.module.project;
 
+import com.suhyeon.intelli_folio.module.project.dto.CreateProjectCommand;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ProjectMapper {
-    void insert(@Param("userId") long userId,
-                @Param("name") String name,
-                @Param("summary") String summary);
-
-    Long lastInsertId();
-
+    int insert(CreateProjectCommand cmd);
     Long findOwnerUserId(@Param("projectId") long projectId);
 }
