@@ -9,4 +9,5 @@ public interface UserMapper {
     int insert(@Param("email") String email,
                @Param("passwordHash") String passwordHash,
                @Param("displayName") String displayName);
+    Long lastInsertId();
 }
