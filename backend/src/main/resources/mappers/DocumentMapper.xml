@@ -15,4 +15,22 @@
     </insert>
 
 
+    <select id="findByProjectIds"
+            resultType="com.suhyeon.intelli_folio.module.project.domain.Document">
+        SELECT
+        id,
+        project_id AS projectId,
+        title,
+        original_filename AS originalFilename,
+        size_bytes AS sizeBytes,
+        created_at AS createdAt,
+        updated_at AS udpatedAt
+        FROM documents
+        WHERE project_id IN
+        <foreach collection="projectIds" item="pid" open="(" separator="," close=")">
+            #{pid}
+        </foreach>
+        ORDER BY project_id ASC, id ASC
+    </select>
+
 </mapper>

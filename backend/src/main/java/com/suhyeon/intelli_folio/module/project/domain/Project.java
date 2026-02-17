@@ -8,7 +8,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-class Project {
+public class Project {
     private Long id;
     private Long userId;
     private String name;

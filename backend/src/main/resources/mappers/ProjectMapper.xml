@@ -18,6 +18,20 @@
         SELECT LAST_INSERT_ID()
     </select>
 
+    <select id="findByUserId"
+            resultType="com.suhyeon.intelli_folio.module.project.domain.Project">
+        SELECT
+            id,
+            user_id AS userId,
+            name,
+            summary,
+            created_at AS createdAt,
+            updated_at AS udpatedAt
+        FROM projects
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
     <select id="findOwnerUserId" resultType="long">
         SELECT user_id
         FROM projects

@@ -1,11 +1,10 @@
 package com.suhyeon.intelli_folio.module.project.service;
 
-import com.suhyeon.intelli_folio.module.project.dto.CreateDocumentCommand;
-import com.suhyeon.intelli_folio.module.project.dto.CreateProjectCommand;
+import com.suhyeon.intelli_folio.module.project.domain.Document;
+import com.suhyeon.intelli_folio.module.project.domain.Project;
+import com.suhyeon.intelli_folio.module.project.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.suhyeon.intelli_folio.module.project.dto.UploadDocumentsResponse;
-import com.suhyeon.intelli_folio.module.project.dto.UploadedDocumentResult;
 import com.suhyeon.intelli_folio.module.project.DocumentMapper;
 import com.suhyeon.intelli_folio.module.project.ProjectMapper;
 import com.suhyeon.intelli_folio.module.project.util.TextChunker;
@@ -15,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -105,6 +106,39 @@ public class ProjectService {
 
         return new UploadDocumentsResponse(projectId, results);
     }
+
+    public MyProjectsResponse getMyProjects(long userId) {
+
+        // 1) projects
+        List<Project> projects = projectMapper.findByUserId(userId);
+        if (projects.isEmpty()) {
+            return new MyProjectsResponse(List.of());
+        }
+
+        // 2) documents by IN(projectIds)
+        List<Long> projectIds = projects.stream().map(Project::getId).toList();
+        List<Document> docs = documentMapper.findByProjectIds(projectIds);
+
+        // 3) group docs by projectId
+        Map<Long, List<DocumentSummary>> docsByProjectId = new HashMap<>();
+        for (var d : docs) {
+            docsByProjectId
+                    .computeIfAbsent(d.getProjectId(), k -> new ArrayList<>())
+                    .add(new DocumentSummary(d.getId(), d.getTitle(), d.getOriginalFilename(), d.getSizeBytes()));
+        }
+
+        // 4) compose response
+        List<ProjectWithDocuments> result = new ArrayList<>();
+        for (var p : projects) {
+            var list = docsByProjectId.getOrDefault(p.getId(), List.of());
+            result.add(new ProjectWithDocuments(p.getId(), p.getName(), p.getSummary(), list));
+        }
+
+        return new MyProjectsResponse(result);
+    }
+
+
+
 
     private void assertOwner(long userId, long projectId) {
         Long ownerId = projectMapper.findOwnerUserId(projectId);

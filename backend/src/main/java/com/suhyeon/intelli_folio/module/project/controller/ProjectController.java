@@ -2,6 +2,7 @@ package com.suhyeon.intelli_folio.module.project.controller;
 
 import com.suhyeon.intelli_folio.module.project.dto.CreateProjectRequest;
 import com.suhyeon.intelli_folio.module.project.dto.CreateProjectResponse;
+import com.suhyeon.intelli_folio.module.project.dto.MyProjectsResponse;
 import com.suhyeon.intelli_folio.module.project.dto.UploadDocumentsResponse;
 import com.suhyeon.intelli_folio.module.project.service.ProjectService;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,6 +42,12 @@ public class ProjectController {
             @RequestPart("files") List<MultipartFile> files
     ) {
         return projectService.uploadDocuments(userId, projectId, files);
+    }
+
+    @GetMapping("/me")
+    public MyProjectsResponse myProjects(@Parameter(hidden = true)
+                                             @RequestAttribute("userId") long userId){
+        return projectService.getMyProjects(userId);
     }
 
 }
