@@ -4,6 +4,8 @@ import com.suhyeon.intelli_folio.rag.ollama.EmbeddingClient;
 import com.suhyeon.intelli_folio.rag.qdrant.QdrantClient;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class RagInitializer {
-
+    private static final Logger log = LoggerFactory.getLogger(RagInitializer.class);
     private final QdrantClient qdrantClient;
     private  final EmbeddingClient embeddingClient;
     @PostConstruct
@@ -20,8 +22,8 @@ public class RagInitializer {
         qdrantClient.ensureCollectionExists();
         // embedding
         List<Float> vec = embeddingClient.embedOne("hello, world!");
-        System.out.println("embedding size = " + vec.size());
-        System.out.println("first3 = " + vec.subList(0, Math.min(3, vec.size())));
+        log.info("embedding server heath check");
+        log.info(String.format("embedding size= %d",vec.size()) );
     }
 
 
