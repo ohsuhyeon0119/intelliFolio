@@ -1,7 +1,7 @@
-package com.suhyeon.intelli_folio.rag;
+package com.suhyeon.intelli_folio.core.rag;
 
-import com.suhyeon.intelli_folio.rag.ollama.EmbeddingClient;
-import com.suhyeon.intelli_folio.rag.qdrant.QdrantClient;
+import com.suhyeon.intelli_folio.core.rag.ollama.EmbeddingClient;
+import com.suhyeon.intelli_folio.core.rag.qdrant.QdrantClient;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

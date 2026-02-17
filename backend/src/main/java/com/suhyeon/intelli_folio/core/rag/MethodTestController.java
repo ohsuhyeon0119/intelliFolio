@@ -1,8 +1,8 @@
-package com.suhyeon.intelli_folio.controller;
+package com.suhyeon.intelli_folio.core.rag;
 
 
-import com.suhyeon.intelli_folio.rag.qdrant.QdrantClient;
-import com.suhyeon.intelli_folio.service.RagService;
+import com.suhyeon.intelli_folio.core.rag.qdrant.QdrantClient;
+import com.suhyeon.intelli_folio.module.rag.RagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

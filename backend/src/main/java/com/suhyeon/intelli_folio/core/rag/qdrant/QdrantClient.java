@@ -1,4 +1,4 @@
-package com.suhyeon.intelli_folio.rag.qdrant;
+package com.suhyeon.intelli_folio.core.rag.qdrant;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

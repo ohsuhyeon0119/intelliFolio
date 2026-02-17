@@ -1,11 +1,11 @@
-package com.suhyeon.intelli_folio.service;
+package com.suhyeon.intelli_folio.module.rag;
 
-import com.suhyeon.intelli_folio.rag.ollama.EmbeddingClient;
-import com.suhyeon.intelli_folio.rag.qdrant.QdrantClient;
-import com.suhyeon.intelli_folio.rag.qdrant.QdrantClient.SearchScope;
-import com.suhyeon.intelli_folio.rag.qdrant.QdrantClient.SearchHit;
+import com.suhyeon.intelli_folio.core.rag.ollama.EmbeddingClient;
+import com.suhyeon.intelli_folio.core.rag.qdrant.QdrantClient;
+import com.suhyeon.intelli_folio.core.rag.qdrant.QdrantClient.SearchScope;
+import com.suhyeon.intelli_folio.core.rag.qdrant.QdrantClient.SearchHit;
 
-import com.suhyeon.intelli_folio.rag.qdrant.QdrantProperties;
+import com.suhyeon.intelli_folio.core.rag.qdrant.QdrantProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

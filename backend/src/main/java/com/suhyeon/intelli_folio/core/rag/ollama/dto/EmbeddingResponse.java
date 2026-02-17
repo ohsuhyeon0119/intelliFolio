@@ -1,4 +1,4 @@
-package com.suhyeon.intelli_folio.rag.ollama.dto;
+package com.suhyeon.intelli_folio.core.rag.ollama.dto;
 
 import java.util.List;
 

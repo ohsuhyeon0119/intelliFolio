@@ -1,4 +1,4 @@
-package com.suhyeon.intelli_folio.rag.ollama;
+package com.suhyeon.intelli_folio.core.rag.ollama;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

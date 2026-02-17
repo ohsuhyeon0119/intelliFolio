@@ -1,7 +1,7 @@
-package com.suhyeon.intelli_folio.rag.ollama;
+package com.suhyeon.intelli_folio.core.rag.ollama;
 
-import com.suhyeon.intelli_folio.rag.ollama.dto.EmbeddingRequest;
-import com.suhyeon.intelli_folio.rag.ollama.dto.EmbeddingResponse;
+import com.suhyeon.intelli_folio.core.rag.ollama.dto.EmbeddingRequest;
+import com.suhyeon.intelli_folio.core.rag.ollama.dto.EmbeddingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
